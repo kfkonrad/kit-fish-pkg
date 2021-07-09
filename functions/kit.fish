@@ -40,14 +40,13 @@ function kit --description "Kevin's custom wrapper around some git commands"
   else if test $command = "clone"
     __kit_clone $argv
   else
-      echo "Unknown command: $command" >&2
-      echo "Try kit --help" >&2
+      git $command $argv
   end
 
 end
 
 function __kit_version
- echo v0.0.1
+ echo v0.1.0
 end
 
 function __kit_help
@@ -55,11 +54,13 @@ function __kit_help
   echo
   echo 'subcommands:'
   echo '  clone'
-  echo '    works like git clone, but chooses the directory to clone into based on the URL'
+  echo '    clone into automatically chosen directory'
   echo '  version'
   echo '    prints version of kit'
   echo '  help'
   echo '    prints this help'
+  echo '  *'
+  echo '    pass to git'
 end
 
 function __kit_clone
@@ -103,14 +104,28 @@ function __kit_helper_extract_full_path
 end
 
 function __kit_helper_extract_full_path_ssh
-  set host (echo $argv[1] | sed 's/.*@//;s/:.*//;s/\..*$//')
-  set gitpath (echo $argv[1] | sed 's/.*://;s/\.git$//')
-  echo $HOME/workspace/$host/$gitpath
+  set schemaless (echo $argv[1] | sed 's/.*@//;s|:|/|;s|\.git$||')
+  __kit_helper_extract_full_path_generic $schemaless
 end
 
 function __kit_helper_extract_full_path_https
-  set schemaless (echo $argv[1] | sed 's|^https://||')
-  set host (echo $schemaless | sed 's|/.*||;s|\..*$||')
-  set gitpath (echo $schemaless | sed 's|[^/]*/||;s|\.git$||')
-  echo $HOME/workspace/$host/$gitpath
+  set schemaless (echo $argv[1] | sed 's|^https://||;s|\.git$||')
+  __kit_helper_extract_full_path_generic $schemaless
+end
+
+function __kit_helper_extract_full_path_generic
+  set fqdn (echo $argv[1] | sed 's|/.*||')
+  set fish_friendly_fqdn (echo $fqdn | sed 's/\./_/g')
+  if set -q kit_domain_filter_$fish_friendly_fqdn
+    set domain_filter (eval echo \$kit_domain_filter'_'$fish_friendly_fqdn)
+  else if set -q kit_domain_filter
+    set domain_filter $kit_domain_filter
+  else
+    set domain_filter 's|\..*$||'
+  end
+  set domain_path (echo $fqdn | sed "$domain_filter")
+  set rest_path (echo $argv[1] | sed 's|[^/]*/||')
+  if set -q kit_base_dir
+    set -l kit_base_dir $HOME/workspace
+  echo $kit_base_dir/$domain_path/$rest_path
 end
