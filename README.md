@@ -29,6 +29,15 @@ $ kit clone https://github.com/fish-shell/fish-shell.git
 `kit clone <URL>` will clone the repo to `~/workspace/<domain>/<uri-path>` (e.g. `~/workspace/github/fish-shell/fish-shell`) so that the domain (without TLD) and path in the URL are translated to a path under `~/workspace`. Non-existing intermediary directories will be auto-generated as well. Both https and ssh/git are supported.
 
 ```fish
+$ kit push
+```
+
+`kit push` wraps arount git push and sets the `-u`-parameter automatically.
+The branch name for `-u` is always the name of the current local branch.
+If only one remote is configured, that value will always be used.
+If multiple remotes exist, `origin` will be used (regardless of whether a remote with that name exists) unless the user overrides that by setting `$kit_default_remote`.
+
+```fish
 $ kit help
 $ kit -h
 $ kit --help

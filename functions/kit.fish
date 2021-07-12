@@ -33,20 +33,23 @@ function kit --description "Kevin's custom wrapper around some git commands"
     end
   end
 
-  if test $command = "version"
-    __kit_version
-  else if test $command = "help"
-    __kit_help
-  else if test $command = "clone"
-    __kit_clone $argv
-  else
+  switch $command
+    case "version"
+      __kit_version
+    case "help"
+      __kit_help
+    case "clone"
+      __kit_clone $argv
+    case "push"
+      __kit_push $argv
+    case "*"
       git $command $argv
   end
 
 end
 
 function __kit_version
- echo v0.1.1
+ echo v0.2.0
 end
 
 function __kit_help
@@ -68,6 +71,19 @@ function __kit_clone
   set fullpath (__kit_helper_extract_full_path $url)
   mkdir -p $fullpath
   git clone $argv $fullpath
+end
+
+function __kit_push
+  set branch (git branch --show-current)
+  set git_remote (git remote)
+  if test (count $git_remote) = 1
+    set remote $git_remote
+  else if set -q kit_default_remote
+    set remote $kit_default_remote
+  else
+    set remote origin
+  end
+  git push $argv -u $remote $branch
 end
 
 # this also excludes arguments to options like so
