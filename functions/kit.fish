@@ -33,16 +33,9 @@ function kit --description "Kevin's custom wrapper around some git commands"
     end
   end
 
-  switch $command
-    case "version"
-      __kit_version
-    case "help"
-      __kit_help
-    case "clone"
-      __kit_clone $argv
-    case "push"
-      __kit_push $argv
-    case "*"
+  if functions -q __kit_$command
+      eval __kit_$command $argv
+  else
       git $command $argv
   end
 
