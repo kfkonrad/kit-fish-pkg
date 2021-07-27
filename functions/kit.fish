@@ -42,7 +42,7 @@ function kit --description "Kevin's custom wrapper around some git commands"
 end
 
 function __kit_version
- echo v0.2.0
+ echo v0.2.1
 end
 
 function __kit_help
@@ -135,7 +135,9 @@ function __kit_helper_extract_full_path_generic
   set domain_path (echo $fqdn | sed "$domain_filter")
   set rest_path (echo $argv[1] | sed 's|[^/]*/||')
   if set -q kit_base_dir
-    set -l kit_base_dir $HOME/workspace
-    echo $kit_base_dir/$domain_path/$rest_path
+    set base_dir $kit_base_dir
+  else
+    set base_dir $HOME/workspace
   end
+  echo $base_dir/$domain_path/$rest_path
 end
