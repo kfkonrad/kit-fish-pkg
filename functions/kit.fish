@@ -42,7 +42,7 @@ function kit --description "Kevin's custom wrapper around some git commands"
 end
 
 function __kit_version
- echo v0.2.1
+ echo v0.2.2
 end
 
 function __kit_help
@@ -51,6 +51,8 @@ function __kit_help
   echo 'subcommands:'
   echo '  clone'
   echo '    clone into automatically chosen directory'
+  echo '  push'
+  echo '    push and set upstream automatically'
   echo '  version'
   echo '    prints version of kit'
   echo '  help'
