@@ -42,7 +42,7 @@ function kit --description "Kevin's custom wrapper around some git commands"
 end
 
 function __kit_version
- echo v0.2.2
+ echo v0.3.0
 end
 
 function __kit_help
@@ -66,6 +66,9 @@ function __kit_clone
   set fullpath (__kit_helper_extract_full_path $url)
   mkdir -p $fullpath
   git clone $argv $fullpath
+  if set -q kit_cd_after_clone
+    cd $fullpath
+  end
 end
 
 function __kit_push

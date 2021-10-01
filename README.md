@@ -72,6 +72,7 @@ Displays current version of `kit`.
 - A domain-specific filter takes precedence over a custom filter
 - The domain being filtered is always the FQDN of the git server, e.g. `github.com` for both `git@github.com:fish-shell/fish-shell.git` and `https://github.com/fish-shell/fish-shell.git`
 - I.e. any schema and URL path is stripped from the input before a filter is applied
+- If `$kit_cd_after_clone` is set (to any value), `kit clone` will cd into the newly cloned repo
 
 Examples for filters:
 - Not filtering any domain name at all
