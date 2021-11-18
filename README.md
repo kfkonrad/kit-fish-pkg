@@ -22,7 +22,10 @@ $ omf install kit
 ### `kit clone`
 
 ```fish
+$ kit clone ssh://git@github.com:fish-shell/fish-shell.git
+OR
 $ kit clone git@github.com:fish-shell/fish-shell.git
+OR
 $ kit clone https://github.com/fish-shell/fish-shell.git
 ```
 

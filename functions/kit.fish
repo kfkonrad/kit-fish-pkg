@@ -42,7 +42,7 @@ function kit --description "Kevin's custom wrapper around some git commands"
 end
 
 function __kit_version
- echo v0.4.0
+ echo v0.4.1
 end
 
 function __kit_help
@@ -110,7 +110,7 @@ end
 
 
 function __kit_helper_extract_full_path
-  if grep -qe "^git@" (echo $argv[1] | psub)
+  if grep -qe "^git@" -e "^ssh://git@" (echo $argv[1] | psub)
     __kit_helper_extract_full_path_ssh $argv[1]
   else
     __kit_helper_extract_full_path_https $argv[1]
