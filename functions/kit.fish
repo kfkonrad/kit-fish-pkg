@@ -129,7 +129,7 @@ end
 
 function __kit_helper_extract_full_path_generic
   set fqdn (echo $argv[1] | sed 's|/.*||')
-  set fish_friendly_fqdn (echo $fqdn | sed 's/\./_/g')
+  set fish_friendly_fqdn (echo $fqdn | sed 's/[.-]/_/g')
   if set -q kit_domain_filter_$fish_friendly_fqdn
     set domain_filter (eval echo \$kit_domain_filter'_'$fish_friendly_fqdn)
   else if set -q kit_domain_filter

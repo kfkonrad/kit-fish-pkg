@@ -68,7 +68,7 @@ Displays current version of `kit`.
 - You can change the base directory from `~/workspace` by setting `$kit_base_dir`
 - You can customize the behavior for generating the `<domain>`-part by providing a variable with an sed filter expression
 - If you want to change the behavior for all domains, set a variable `$kit_domain_filter`
-- To change the behavior for a specific domain, set a variable `$kit_domain_filter_<domain>`. Make sure to replace all dots with underscores in the variable name
+- To change the behavior for a specific domain, set a variable `$kit_domain_filter_<domain>`. Make sure to replace all dots and dashes with underscores in the variable name
 - A domain-specific filter takes precedence over a custom filter
 - The domain being filtered is always the FQDN of the git server, e.g. `github.com` for both `git@github.com:fish-shell/fish-shell.git` and `https://github.com/fish-shell/fish-shell.git`
 - I.e. any schema and URL path is stripped from the input before a filter is applied
