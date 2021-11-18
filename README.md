@@ -66,26 +66,52 @@ Displays current version of `kit`.
 ### `kit clone`
 
 - You can change the base directory from `~/workspace` by setting `$kit_base_dir`
+- If `$kit_cd_after_clone` is set (to any value), `kit clone` will cd into the newly cloned repo
 - You can customize the behavior for generating the `<domain>`-part by providing a variable with an sed filter expression
+- You can also customize the behavior for generating the `<uri-path>`-part by providing a variable with an sed filter expression
+- All filters can be used independently
+- A domain-specific filter takes precedence over a custom filter
+
+#### Domain filters
+
 - If you want to change the behavior for all domains, set a variable `$kit_domain_filter`
 - To change the behavior for a specific domain, set a variable `$kit_domain_filter_<domain>`. Make sure to replace all dots and dashes with underscores in the variable name
-- A domain-specific filter takes precedence over a custom filter
 - The domain being filtered is always the FQDN of the git server, e.g. `github.com` for both `git@github.com:fish-shell/fish-shell.git` and `https://github.com/fish-shell/fish-shell.git`
 - I.e. any schema and URL path is stripped from the input before a filter is applied
-- If `$kit_cd_after_clone` is set (to any value), `kit clone` will cd into the newly cloned repo
 
-Examples for filters:
-- Not filtering any domain name at all
-  - `set kit_domain_filter ""`
-  - `github.com/fish-shell/fish/shell` will be cloned into the path `~/workspace/github.com/fish-shell/fish-shell`
-  - `gitlab.com/gitlab-org/gitlab` will be cloned into the path `~/workspace/gitlab.com/gitlab-org/gitlab`
-- Remove the dot in `github.com`
-  - `set kit_domain_filter_github_com 's/\.//'`
-  - `github.com/fish-shell/fish/shell` will be cloned into the path `~/workspace/githubcom/fish-shell/fish-shell`
-  - `gitlab.com/gitlab-org/gitlab` will be cloned into the path `~/workspace/gitlab/gitlab-org/gitlab`
-- With both of these filters set
-  - `github.com/fish-shell/fish/shell` will be cloned into the path `~/workspace/githubcom/fish-shell/fish-shell`
-  - `gitlab.com/gitlab-org/gitlab` will be cloned into the path `~/workspace/gitlab.com/gitlab-org/gitlab`
+#### Path filters
+
+- By default no path filter is applied
+- To change the behavior for all domains set `$kit_path_filter`
+- To change the behavior for a specific domain, set a variable `$kit_path_filter_<domain>` with the same naming conventing as above
+- Any path filter should assume no leading colon or slash is present
+
+#### Examples for filters
+
+- Using only domain filters
+  - Not filtering any domain name at all
+    - `set kit_domain_filter ""`
+    - `github.com/fish-shell/fish/shell` will be cloned into the path `~/workspace/github.com/fish-shell/fish-shell`
+    - `gitlab.com/gitlab-org/gitlab` will be cloned into the path `~/workspace/gitlab.com/gitlab-org/gitlab`
+  - Remove the dot in `github.com`
+    - `set kit_domain_filter_github_com 's/\.//'`
+    - `github.com/fish-shell/fish/shell` will be cloned into the path `~/workspace/githubcom/fish-shell/fish-shell`
+    - `gitlab.com/gitlab-org/gitlab` will be cloned into the path `~/workspace/gitlab/gitlab-org/gitlab`
+  - With both of these filters set
+    - `github.com/fish-shell/fish/shell` will be cloned into the path `~/workspace/githubcom/fish-shell/fish-shell`
+    - `gitlab.com/gitlab-org/gitlab` will be cloned into the path `~/workspace/gitlab.com/gitlab-org/gitlab`
+- Only using path filters
+  - Convet all alpha characters to lowercase
+    - `set kit_path_filter 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
+    - `https://github.com/google/CFU-Playground.git` will be cloned into the path `~/workspace/github/google/cfu-playground`
+  - shorten a long user/group name for `github.com`
+    - `set kit_path_filter_github_com 's/^kubernetes/k8s/'`
+    - `https://github.com/kubernetes/kubernetes.git` will be cloned into the path `~/workspace/github/k8s/kubernetes`
+- Using both domain and path filters
+  - Shortening github.com to gh and replacing cloud with just-a-computer in the path
+    - `set kit_path_filter_github_com 's/cloud/just-a-computer/'`
+    - `set kit_domain_filter_github_com 's/github\.com/gh/'`
+    - `git@github.com:google/go-cloud.git` will be cloned into the path `~/workspace/gh/google/go-just-a-computer`
 
 # License
 
