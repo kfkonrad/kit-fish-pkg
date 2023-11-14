@@ -2,7 +2,9 @@
 
 #### kit
 
-> A plugin for [Oh My Fish][omf-link].
+> A plugin for [Oh My Fish][omf-link]. `kit clone` automatically calculates the directory to clone the repo to whereas
+`kit push` calculates the remote to push to.
+
 
 [![MIT License](https://img.shields.io/badge/license-MIT-007EC7.svg?style=flat-square)](/LICENSE)
 [![Fish Shell Version](https://img.shields.io/badge/fish-v2.2.0-007EC7.svg?style=flat-square)](https://fishshell.com)
@@ -15,6 +17,9 @@
 ```fish
 omf install kit
 ```
+
+By the way: If you prefer using Bash or ZSH there's a version of `kit` with the exact same feature-set for that, too.
+See [kit-bash-pkg](https://github.com/kfkonrad/kit-bash-pkg).
 
 ## Usage
 
