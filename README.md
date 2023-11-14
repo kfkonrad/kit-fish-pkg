@@ -1,6 +1,7 @@
 <img src="https://cdn.rawgit.com/oh-my-fish/oh-my-fish/e4f1c2e0219a17e2c748b824004c8d0b38055c16/docs/logo.svg" align="left" width="144px" height="144px"/>
 
 #### kit
+
 > A plugin for [Oh My Fish][omf-link].
 
 [![MIT License](https://img.shields.io/badge/license-MIT-007EC7.svg?style=flat-square)](/LICENSE)
@@ -9,24 +10,22 @@
 
 <br/>
 
-
 ## Install
 
 ```fish
-$ omf install kit
+omf install kit
 ```
-
 
 ## Usage
 
 ### `kit clone`
 
 ```fish
-$ kit clone ssh://git@github.com:fish-shell/fish-shell.git
+kit clone ssh://git@github.com:fish-shell/fish-shell.git
 OR
-$ kit clone git@github.com:fish-shell/fish-shell.git
+kit clone git@github.com:fish-shell/fish-shell.git
 OR
-$ kit clone https://github.com/fish-shell/fish-shell.git
+kit clone https://github.com/fish-shell/fish-shell.git
 ```
 
 `kit clone` supports the same parameters as `git clone` except that you must not give the optional directory-parameter - `kit clone` will generate that for you.
@@ -36,7 +35,7 @@ $ kit clone https://github.com/fish-shell/fish-shell.git
 ### `kit push`
 
 ```fish
-$ kit push
+kit push
 ```
 
 `kit push` wraps arount git push and sets the `-u`-parameter automatically.
@@ -47,9 +46,9 @@ If multiple remotes exist, `origin` will be used (regardless of whether a remote
 ### `kit help`
 
 ```fish
-$ kit help
-$ kit -h
-$ kit --help
+kit help
+kit -h
+kit --help
 ```
 
 Shows a rudimentary help.
@@ -57,9 +56,9 @@ Shows a rudimentary help.
 ### `kit version`
 
 ```fish
-$ kit version
-$ kit -v
-$ kit --version
+kit version
+kit -v
+kit --version
 ```
 
 Displays current version of `kit`.
@@ -116,14 +115,11 @@ Displays current version of `kit`.
     - `set kit_domain_filter_github_com 's/github\.com/gh/'`
     - `git@github.com:google/go-cloud.git` will be cloned into the path `~/workspace/gh/google/go-just-a-computer`
 
-# License
+## License
 
 [MIT][mit] © [Kevin Konrad][author] et [al][contributors]
 
-
 [mit]:            https://opensource.org/licenses/MIT
 [author]:         https://github.com/kfkonrad
-[contributors]:   https://github.com/kfkonrad/plugin-kit/graphs/contributors
+[contributors]:   https://github.com/kfkonrad/kit-fish-pkg/graphs/contributors
 [omf-link]:       https://www.github.com/oh-my-fish/oh-my-fish
-
-[license-badge]:  https://img.shields.io/badge/license-MIT-007EC7.svg?style=flat-square
